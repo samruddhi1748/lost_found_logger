@@ -47,5 +47,26 @@ public class ItemDAO {
 		}
 		return list;
 	}
+	public void updateItem(Item item) {
+		try {
+		PreparedStatement ps=con.prepareStatement("update items SET item_name=?,description=?,status=?,date=? WHRE is=?");
+		ps.setString(1, item.getItemName());
+		ps.setString(2, item.getDescription());
+		ps.setString(3, item.getStatus());
+		ps.setDate(4,item.getDate());
+		ps.executeUpdate();
+		
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+		}
+	public void deleteItem(int id) {
+		try {
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }
