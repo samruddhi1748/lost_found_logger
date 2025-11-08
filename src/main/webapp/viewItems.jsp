@@ -38,8 +38,8 @@
             <td><%= item.getStatus() %></td>
             <td><%= item.getDate() %></td>
             <td>
-                <a class="btn" href="UpdateDeleteController?action=edit&id=<%= item.getId() %>">Edit</a> |
-                <a class="btn btn-del" href="UpdateDeleteController?action=delete&id=<%= item.getId() %>">Delete</a>
+                <a href="ItemController?action=edit&id=<%= item.getId() %>">Edit</a>
+<a href="delete.jsp?id=<%= item.getId() %>">Delete</a>
             </td>
         </tr>
         <% } } %>

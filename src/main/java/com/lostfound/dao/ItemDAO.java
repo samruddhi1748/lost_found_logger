@@ -49,11 +49,12 @@ public class ItemDAO {
 	}
 	public void updateItem(Item item) {
 		try {
-		PreparedStatement ps=con.prepareStatement("update items SET item_name=?,description=?,status=?,date=? WHRE is=?");
+			PreparedStatement ps=con.prepareStatement("UPDATE items SET item_name=?, description=?, status=?, date=? WHERE id=?");
 		ps.setString(1, item.getItemName());
 		ps.setString(2, item.getDescription());
 		ps.setString(3, item.getStatus());
 		ps.setDate(4,item.getDate());
+		ps.setInt(5, item.getId());
 		ps.executeUpdate();
 		
 	}catch(Exception e) {
@@ -62,7 +63,9 @@ public class ItemDAO {
 		}
 	public void deleteItem(int id) {
 		try {
-			
+			PreparedStatement ps=con.prepareStatement("delete from items where id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
