@@ -32,7 +32,6 @@
         #loader img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
         }
 
         @keyframes fadeOut {
@@ -131,14 +130,89 @@
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
+
+        /* Logout Button */
+        #logout-btn {
+            background-color: #f44336;
+        }
+
+        #logout-btn:hover {
+            background-color: #e53935;
+        }
+
+        /* Logout Confirmation Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .btn-red {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .btn-green {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        
+        .btn-red:hover {
+            background-color: #e53935;
+        }
+
+        .btn-green:hover {
+            background-color: #45a049;
+        }
     </style>
+    <script>
+        function confirmLogout() {
+            // Show the logout confirmation modal
+            document.getElementById("logoutModal").style.display = "flex";
+        }
+
+        // Handle Yes button click
+        function logoutYes() {
+            window.location.href = "auth.jsp";
+        }
+
+        // Handle Cancel button click
+        function logoutCancel() {
+            document.getElementById("logoutModal").style.display = "none";
+        }
+    </script>
 </head>
 
 <body>
 
     <!-- ⭐ FULLSCREEN TREASURE BOX ANIMATION ⭐ -->
     <div id="loader">
-        <img src="https://media.lordicon.com/icons/wired/flat/2076-lost-and-found.gif" alt="Treasure Box Opening Animation">
+        <img src="https://media.lordicon.com/icons/wired/flat/2076-lost-and-found.gif" alt="Treasure Box Opening Animation" width=90%>
     </div>
 
     <!-- MAIN DASHBOARD -->
@@ -152,6 +226,18 @@
         <a href="ItemController">
             <button class="btn" id="btn2">View All Items</button>
         </a>
+
+        <!-- Logout Button -->
+        <button class="btn" id="logout-btn" onclick="confirmLogout()">Logout</button>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to log out?</p>
+            <button class="btn-red" onclick="logoutYes()">Yes</button>
+            <button class="btn-green" onclick="logoutCancel()">Cancel</button>
+        </div>
     </div>
 
 </body>

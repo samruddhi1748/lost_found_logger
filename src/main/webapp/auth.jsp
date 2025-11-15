@@ -4,247 +4,162 @@
 <head>
     <meta charset="UTF-8" />
     <title>Login/Register</title>
+
     <style>
-        /* Add your CSS here, including sliding forms, background animation, etc. */
-        /* Dark background */
-body {
-  margin: 0;
-  height: 100vh;
-  overflow: hidden;
-  background: #000011; /* very dark blue-black */
-  position: relative;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
-/* Container to hold stars */
-#stars, #stars2, #stars3 {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none; /* so clicks go through */
-  z-index: 0;
-}
-
-/* Small star styles */
-.star {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: blink 2s infinite;
-}
-
-/* Different star sizes */
-#stars .star {
-  width: 1px;
-  height: 1px;
-  animation-duration: 1.5s;
-}
-
-#stars2 .star {
-  width: 2px;
-  height: 2px;
-  animation-duration: 2.5s;
-}
-
-#stars3 .star {
-  width: 3px;
-  height: 3px;
-  animation-duration: 3.5s;
-  opacity: 0.6;
-}
-
-/* Blink animation */
-@keyframes blink {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 0.2; }
-}
-        
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: #000;
-            overflow: hidden;
-            color: #fff;
-        }
-        .container {
-            width: 400px;
-            margin: 100px auto;
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.1);
-            box-shadow: 0 0 20px #0ff;
-        }
-        #form-slider {
+            font-family: "Poppins", Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff, #e8f1ff);
             display: flex;
-            width: 800px;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .main-wrapper {
+            width: 900px;
+            height: 500px;
+            background: #ffffff;
+            display: flex;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .left-panel {
+            width: 45%;
+            background: linear-gradient(135deg, #ffeb3b, #ffffff);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 2px solid #e3e9f5;
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .left-panel img {
+            width: 80%;
+            border-radius: 8px;
+        }
+
+        /* Right panel */
+        .container {
+            width: 45%;
+            overflow: hidden;         /* IMPORTANT */
+            position: relative;
+        }
+
+        /* Slider */
+        #form-slider {
+            width: 800px;             /* 400 + 400 */
+            display: flex;
             transition: transform 0.5s ease-in-out;
         }
+
         form {
             width: 400px;
-            padding: 30px;
+            padding: 40px;
             box-sizing: border-box;
         }
+
         input {
             width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            outline: none;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 6px;
+            border: 1px solid #c8d4e7;
         }
+
         button {
+            padding: 12px;
             width: 100%;
-            padding: 10px;
-            background: #0ff;
+            background: #4a9eff;
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            margin-top: 10px;
             cursor: pointer;
-            font-weight: bold;
-            color: #000;
         }
+
         .toggle-link {
             text-align: center;
             margin-top: 15px;
             cursor: pointer;
-            color: #0ff;
-            user-select: none;
+            color: #4a9eff;
+            font-weight: 600;
         }
+
         .error-msg {
-            color: #f55;
-            font-weight: bold;
+            color: red;
             text-align: center;
-            margin-top: 10px;
         }
-        /* Add starry background styles here */
-        /* ... */
     </style>
 </head>
-<body>
-<div id="stars"></div>
-<div id="stars2"></div>
-<div id="stars3"></div>
 
+<body>
 
 <%
     String error = (String) request.getAttribute("error");
 %>
 
-<div class="container">
-    <div id="form-slider">
+<div class="main-wrapper">
 
-        <!-- LOGIN FORM -->
-        <form method="post" action="UserController">
-            <h2>Login</h2>
-            <input type="hidden" name="action" value="login" />
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-
-            <div class="toggle-link" onclick="toggleForm()">Don't have an account? Register</div>
-
-            <div class="error-msg">
-                <% if (error != null && error.contains("login")) { out.print(error); } %>
-            </div>
-        </form>
-
-        <!-- REGISTER FORM -->
-        <form method="post" action="UserController">
-            <h2>Register</h2>
-            <input type="hidden" name="action" value="register" />
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <button type="submit">Register</button>
-
-            <div class="toggle-link" onclick="toggleForm()">Already have an account? Login</div>
-
-            <div class="error-msg">
-                <% if (error != null && error.contains("register")) { out.print(error); } %>
-            </div>
-        </form>
-
+    <div class="left-panel">
+        <div class="project-title">Lost and Found Logger</div>
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/020/436/895/original/animated-guy-with-search-string-curious-man-with-magnifying-glass-2d-cartoon-flat-character-4k-footage-on-white-with-alpha-channel-transparency-concept-animation-for-web-design-video.jpg">
     </div>
+
+    <div class="container">
+        <div id="form-slider">
+
+            <!-- LOGIN -->
+            <form method="post" action="UserController">
+                <h2>Login</h2>
+                <input type="hidden" name="action" value="login">
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <button type="submit">Login</button>
+                <div class="toggle-link" onclick="toggleForm()">Don't have an account? Register</div>
+            </form>
+
+            <!-- REGISTER -->
+            <form method="post" action="UserController">
+                <h2>Register</h2>
+                <input type="hidden" name="action" value="register">
+                <input type="text" name="username" placeholder="Username">
+                <input type="email" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Password">
+                <button type="submit">Register</button>
+                <div class="toggle-link" onclick="toggleForm()">Already have an account? Login</div>
+            </form>
+
+        </div>
+    </div>
+
 </div>
 
 <script>
-    let slider = document.getElementById('form-slider');
-    let showingRegister = false;
+let slider = document.getElementById('form-slider');
+let showingRegister = false;
 
-    function toggleForm() {
-        if (showingRegister) {
-            slider.style.transform = 'translateX(0)';
-        } else {
-            slider.style.transform = 'translateX(-400px)';
-        }
-        showingRegister = !showingRegister;
+function toggleForm() {
+    if (showingRegister) {
+        slider.style.transform = 'translateX(0)';
+    } else {
+        slider.style.transform = 'translateX(-400px)';
     }
+    showingRegister = !showingRegister;
+}
 </script>
-<script>
-  const starContainers = [
-    document.getElementById('stars'),
-    document.getElementById('stars2'),
-    document.getElementById('stars3')
-  ];
-
-  const starCounts = [100, 70, 50]; // number of stars per layer
-  const maxSpeed = 0.15; // max pixels per frame for movement
-
-  // Create stars for each container
-  starContainers.forEach((container, i) => {
-    for (let j = 0; j < starCounts[i]; j++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      container.appendChild(star);
-
-      // Set initial random position
-      star.style.top = Math.random() * 100 + 'vh';
-      star.style.left = Math.random() * 100 + 'vw';
-
-      // Store movement speed and direction as data attributes
-      star.dataset.speedX = (Math.random() * maxSpeed * 2 - maxSpeed).toFixed(3);
-      star.dataset.speedY = (Math.random() * maxSpeed * 2 - maxSpeed).toFixed(3);
-    }
-  });
-
-  // Animate stars by updating their position
-  function animateStars() {
-    starContainers.forEach(container => {
-      container.querySelectorAll('.star').forEach(star => {
-        // Current position in vw and vh
-        let top = parseFloat(star.style.top);
-        let left = parseFloat(star.style.left);
-
-        // Update position by speed
-        top += parseFloat(star.dataset.speedY);
-        left += parseFloat(star.dataset.speedX);
-
-        // Wrap around screen edges
-        if (top > 100) top = 0;
-        else if (top < 0) top = 100;
-
-        if (left > 100) left = 0;
-        else if (left < 0) left = 100;
-
-        // Apply updated position
-        star.style.top = top + 'vh';
-        star.style.left = left + 'vw';
-      });
-    });
-
-    requestAnimationFrame(animateStars);
-  }
-
-  animateStars();
-</script>
-
-
-<!-- You can add animated star background here or in external CSS/JS -->
 
 </body>
 </html>
